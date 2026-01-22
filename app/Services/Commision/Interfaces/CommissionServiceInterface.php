@@ -2,4 +2,10 @@
 
 namespace App\Services\Commision\Interfaces;
 
-interface CommissionServiceInterface {}
+use Illuminate\Pagination\LengthAwarePaginator;
+
+interface CommissionServiceInterface
+{
+    // Define method to get commission reports
+    public function getCommissionReports(array $filteres);
+}
