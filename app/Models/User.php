@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'first_name',
+        'last_name',
+        'username',
+        'referred_by',
     ];
 
     /**
@@ -44,5 +45,56 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /*    
+    * Define relationship to Order model as purchaser
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'purchaser_id');
+    }
+
+
+    /*    
+    * Define relationship to UserCategory model
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function userCategories()
+    {
+        return $this->hasMany(UserCategory::class);
+    }
+
+
+    /*    
+    * Define relationship to User model as distributor (referrer)
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function distributor()
+    {
+        return $this->belongsTo(User::class, 'referred_by', 'id');
+    }
+
+
+    public function referredCustomers()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    /*    
+    * Define relationship to Category model through UserCategory model
+    * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    */
+    public function categories()
+    {
+        return $this->hasManyThrough(
+            Category::class,
+            UserCategory::class,
+            'user_id', // Foreign key on UserCategory table
+            'id', // Foreign key on Category table
+            'id', // Local key on User table
+            'category_id' // Local key on UserCategory table
+        );
     }
 }
