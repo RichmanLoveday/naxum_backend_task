@@ -73,10 +73,14 @@ class User extends Authenticatable
     */
     public function distributor()
     {
-        return $this->belongsTo(User::class, 'referred_by', 'id');
+        return $this->belongsTo(User::class, 'referred_by');
     }
 
 
+    /*    
+    * Define relationship to User model as referred customers
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
     public function referredCustomers()
     {
         return $this->hasMany(User::class, 'referred_by');

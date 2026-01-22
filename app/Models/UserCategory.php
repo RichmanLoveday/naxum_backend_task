@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserCategory extends Model
 {
-    protected $table = "user_categories";
+    protected $table = "user_category";
 
     protected $fillable = [
         'user_id',
