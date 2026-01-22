@@ -11,4 +11,5 @@ interface OrderRepositoryInterface
     // method defined to get commission orders based on filters
     public function getCommisionOrders(array $filters): LengthAwarePaginator;
     public function getRefreredDistributors(User|Null $distributors, string $orderDate): int;
+    public function getOrderItems(string|int $orderId): LengthAwarePaginator;
 }

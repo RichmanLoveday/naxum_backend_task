@@ -14,5 +14,6 @@ Route::prefix('v1')->group(function () {
     // commission report routes
     Route::controller(CommissionReportController::class)->group(function () {
         Route::get('commission-reports', 'index');
+        Route::get('commision-report/{orderId}', 'getItems');
     });
 });

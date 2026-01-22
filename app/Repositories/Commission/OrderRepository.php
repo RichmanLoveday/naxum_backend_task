@@ -3,6 +3,7 @@
 namespace App\Repositories\Commission;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use App\Repositories\Commission\Interfaces\OrderRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -66,5 +67,15 @@ class OrderRepository implements OrderRepositoryInterface
             })
             ->where('enrolled_date', '<=', $orderDate) // check when they joined
             ->count();
+    }
+
+
+
+    public function getOrderItems(string|int $orderId): LengthAwarePaginator
+    {
+        return OrderItem::query()
+            ->with(['product'])
+            ->where('order_id', $orderId)
+            ->paginate(15);
     }
 }

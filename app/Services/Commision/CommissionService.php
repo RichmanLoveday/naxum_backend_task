@@ -4,6 +4,7 @@ namespace App\Services\Commision;
 
 use App\Repositories\Commission\Interfaces\OrderRepositoryInterface;
 use App\Services\Commision\Interfaces\CommissionServiceInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CommissionService implements CommissionServiceInterface
 {
@@ -12,7 +13,7 @@ class CommissionService implements CommissionServiceInterface
     ) {}
 
 
-    public function getCommissionReports(array $filters)
+    public function getCommissionReports(array $filters): LengthAwarePaginator
     {
         $orders = $this->orderRepository->getCommisionOrders($filters);
 
@@ -59,6 +60,14 @@ class CommissionService implements CommissionServiceInterface
         // dd($orders);
         return $orders;
     }
+
+
+    public function getReportItems(string|int $orderId): LengthAwarePaginator
+    {
+        $orderItems = $this->orderRepository->getOrderItems($orderId);
+        return $orderItems;
+    }
+
 
 
     private function calculateCommision(int $count): int
